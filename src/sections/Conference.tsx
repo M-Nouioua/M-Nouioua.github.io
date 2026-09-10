@@ -1,8 +1,31 @@
 import { useEffect, useRef, useState } from 'react'
 
+// The two photos sit in a stack: whichever is in front is upright, the other is
+// rotated behind it so a corner stays visible and clickable. Clicking that
+// corner brings it forward and pushes the other one back.
+const PHOTOS = [
+  {
+    src: '/assets/advanced-projects-award.jpg',
+    alt: 'Mourad Nouioua, right, receiving an award on stage at the Rally for Advanced Projects',
+    caption: 'Rally for Advanced Projects — recognition',
+  },
+  {
+    src: '/assets/presenting.png',
+    alt: 'Delivering a lecture from a podium to a seated audience',
+    caption: 'Lecture delivery',
+  },
+]
+
+// Kept clear of the column padding below, so the rotated corner overhangs into
+// the padding instead of being clipped by the panel's overflow: hidden.
+const TILT = 'rotate(-7deg) translate(-5.5%, -4.5%) scale(0.95)'
+const TILT_HOVER = 'rotate(-4.5deg) translate(-4%, -6%) scale(0.965)'
+
 export default function Conference() {
   const ref = useRef<HTMLElement>(null)
   const [visible, setVisible] = useState(false)
+  const [frontIndex, setFrontIndex] = useState(0)
+  const [hovered, setHovered] = useState<number | null>(null)
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -41,38 +64,104 @@ export default function Conference() {
           </h2>
         </div>
 
-        {/* Two-column: image left, content right */}
+        {/* Two-column: photo stack left, content right */}
         <div className="flex flex-col md:flex-row gap-0" style={{ border: '1px solid #1E1E22', borderRadius: 10, overflow: 'hidden' }}>
 
-          {/* Image column */}
+          {/* Photo stack column */}
           <div
+            className="p-9 md:p-14"
             style={{
               flex: '0 0 45%',
-              position: 'relative',
-              overflow: 'hidden',
+              backgroundColor: '#0A0A0C',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1.5rem',
+              // padding is on the className so it can shrink on phones; the
+              // rotated card overhangs into it rather than being clipped
               minHeight: 420,
               opacity: visible ? 1 : 0,
-              transform: visible ? 'scale(1)' : 'scale(1.04)',
-              transition: 'opacity 1s cubic-bezier(0.16,1,0.3,1) 0.15s, transform 1.2s cubic-bezier(0.16,1,0.3,1) 0.15s',
+              transition: 'opacity 1s cubic-bezier(0.16,1,0.3,1) 0.15s',
             }}
           >
-            <img
-              src="/assets/presenting.png"
-              alt="Dr. Mourad Nouioua delivering a lecture"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'top center',
-                display: 'block',
-                filter: 'brightness(0.88) contrast(1.05)',
-              }}
-            />
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to right, transparent 60%, #08080A)',
-              pointerEvents: 'none',
-            }} />
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3' }}>
+              {PHOTOS.map((photo, i) => {
+                const isFront = i === frontIndex
+                const isHovered = hovered === i && !isFront
+                return (
+                  <button
+                    key={photo.src}
+                    type="button"
+                    onClick={() => setFrontIndex(i)}
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                    // only the card behind is a control; the front one is just the photo
+                    tabIndex={isFront ? -1 : 0}
+                    aria-pressed={isFront}
+                    aria-label={isFront
+                      ? `${photo.caption}, shown in front`
+                      : `Bring to front: ${photo.caption}`}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      padding: 0,
+                      border: 'none',
+                      borderRadius: 8,
+                      overflow: 'hidden',
+                      background: '#0A0A0C',
+                      cursor: isFront ? 'default' : 'pointer',
+                      zIndex: isFront ? 2 : 1,
+                      transform: isFront ? 'rotate(0deg) translate(0, 0) scale(1)'
+                        : isHovered ? TILT_HOVER : TILT,
+                      boxShadow: isFront
+                        ? '0 22px 48px rgba(0,0,0,0.62)'
+                        : '0 12px 30px rgba(0,0,0,0.5)',
+                      transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease',
+                    }}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading="lazy"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        display: 'block',
+                        // the card behind is dimmed so the front one reads first
+                        filter: isFront
+                          ? 'brightness(0.95) contrast(1.04)'
+                          : isHovered ? 'brightness(0.88)' : 'brightness(0.72)',
+                        transition: 'filter 0.45s ease',
+                      }}
+                    />
+                    {/* hairline edge, brighter on the active card */}
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        borderRadius: 8,
+                        border: `1px solid rgba(196,149,106,${isFront ? 0.3 : 0.2})`,
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Caption for whichever photo is in front, plus the swap hint */}
+            <div style={{ textAlign: 'center' }}>
+              <p className="font-body" style={{ fontSize: '0.8rem', color: '#8A8A90', lineHeight: 1.5 }}>
+                {PHOTOS[frontIndex].caption}
+              </p>
+              <p className="font-mono" style={{ fontSize: '0.65rem', color: '#4A4A52', letterSpacing: '0.08em', marginTop: '0.4rem' }}>
+                click the tilted photo to bring it forward
+              </p>
+            </div>
           </div>
 
           {/* Content column */}
