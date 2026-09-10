@@ -62,7 +62,7 @@ export default function Contact() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 mt-8">
-              <a href="https://www.linkedin.com/in/mourad-nouioua" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-body text-sm transition-colors duration-300 hover:text-[#D4AA7D]" style={{ color: '#C4956A', textDecoration: 'none' }}>
+              <a href="https://www.linkedin.com/in/mourad-nouioua-b73844429" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-body text-sm transition-colors duration-300 hover:text-[#D4AA7D]" style={{ color: '#C4956A', textDecoration: 'none' }}>
                 LinkedIn <ExternalLink size={14} />
               </a>
               <a href="https://scholar.google.com/citations?user=tEKyL0UAAAAJ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-body text-sm transition-colors duration-300 hover:text-[#D4AA7D]" style={{ color: '#C4956A', textDecoration: 'none' }}>
@@ -91,7 +91,7 @@ export default function Contact() {
       >
         <span className="font-mono text-xs" style={{ color: '#555555' }}>© 2026 Nouioua Mourad. All rights reserved.</span>
         <div className="flex items-center gap-4">
-          <a href="https://www.linkedin.com/in/mourad-nouioua" target="_blank" rel="noopener noreferrer" className="font-mono text-xs transition-colors duration-300 hover:text-[#C4956A]" style={{ color: '#555555', textDecoration: 'none' }}>LinkedIn</a>
+          <a href="https://www.linkedin.com/in/mourad-nouioua-b73844429" target="_blank" rel="noopener noreferrer" className="font-mono text-xs transition-colors duration-300 hover:text-[#C4956A]" style={{ color: '#555555', textDecoration: 'none' }}>LinkedIn</a>
           <a href="https://scholar.google.com/citations?user=tEKyL0UAAAAJ" target="_blank" rel="noopener noreferrer" className="font-mono text-xs transition-colors duration-300 hover:text-[#C4956A]" style={{ color: '#555555', textDecoration: 'none' }}>Scholar</a>
           <a href="https://orcid.org/0000-0003-0439-2112" target="_blank" rel="noopener noreferrer" className="font-mono text-xs transition-colors duration-300 hover:text-[#C4956A]" style={{ color: '#555555', textDecoration: 'none' }}>ORCID</a>
         </div>

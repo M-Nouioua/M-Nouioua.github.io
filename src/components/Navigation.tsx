@@ -73,7 +73,7 @@ export default function Navigation() {
               Scholar
             </a>
             <a
-              href="https://www.linkedin.com/in/mourad-nouioua"
+              href="https://www.linkedin.com/in/mourad-nouioua-b73844429"
               target="_blank" rel="noopener noreferrer"
               className="font-mono text-xs transition-colors duration-300 hover:text-[#C4956A]"
               style={{ color: '#505058', textDecoration: 'none' }}
