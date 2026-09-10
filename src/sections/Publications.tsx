@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
+import scholar from '@/data/scholar.json'
 
 interface Publication {
   title: string
@@ -10,160 +11,7 @@ interface Publication {
   link: string
 }
 
-const publications: Publication[] = [
-  {
-    title: 'Duty cycle shapes multi-mode transient responses in intermittent rotor–stator rub with no evidence of Sommerfeld capture',
-    journal: 'Scientific Reports',
-    year: '2026',
-    authors: 'M Nouioua, AAD Sarhan, HM Al-Qahtani, S Bashmal, A Laouissi',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:ldfaerwXgEUC',
-  },
-  {
-    title: 'Effect of Rotary Friction Welding Parameters on the Microstructure and Mechanical Performance of Dissimilar AISI 304/AISI 316 L Stainless-Steel Joints',
-    journal: 'Arabian Journal for Science and Engineering, 1-23',
-    year: '2026',
-    authors: 'A Mekahal, E Raouache, C Kezrane, I Elmeguenni, M Nouioua, et al.',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:2P1L_qKh6hAC',
-  },
-  {
-    title: 'Cross-Edge-Validated Tool Condition Monitoring via Joint Natural-Frequency and Damping-Ratio Tracking of Cutting Vibration',
-    journal: 'IEEE Transactions on Industrial Informatics',
-    year: '2026',
-    authors: 'M Nouioua, AAD Sarhan, I Chekalil, V Swaminathan, et al.',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:70eg2SAEIzsC',
-  },
-  {
-    title: 'How friction time controls interfacial evolution and bending strength in steel–alumina rotary friction welded joints',
-    journal: 'Int. J. of Advanced Manufacturing Technology, 1-13',
-    year: '2026',
-    authors: 'F Khalfallah, E Raouache, Z Boumerzoug, S Rajakumar, A Laouissi, et al.',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:35N4QoGY0k4C',
-  },
-  {
-    title: 'How spindle speed and feed rate control PMMA micro-milling: baseline process optimization toward micro-milling of PMMA/GNP nanocomposites',
-    journal: 'Int. J. of Advanced Manufacturing Technology, 1-20',
-    year: '2026',
-    authors: 'S Rawal, AAD Sarhan, AM Sidpara, M Nouioua',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:RYcK_YlVTxYC',
-  },
-  {
-    title: 'Quantitative SEM morphometry for monitoring laser powder-bed-fusion metal-powder feedstock',
-    journal: 'Materials Today Communications 55, 115825',
-    year: '2026',
-    authors: 'M Nouioua, I Chekalil, V Swaminathan, RM Khan, AFM Arif',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:lSLTfruPkqcC',
-  },
-  {
-    title: 'Machine-learning surrogates for the multi-objective optimisation of cutting parameters in dry turning of POM C GF25%',
-    journal: 'Int. J. of Advanced Manufacturing Technology, 1-20',
-    year: '2026',
-    authors: 'N Djouambi, MA Yallese, M Kaddeche, A Maoudj, A Khellaf, M Nouioua',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:NaGl4SEjCO4C',
-  },
-  {
-    title: 'Performance evaluation of ultrasonic assisted leather bonding for improved durability and sustainability',
-    journal: 'Results in Engineering, 111524',
-    year: '2026',
-    authors: 'V Swaminathan, I Chekalil, A Alsheghri, MF Saffiudeen, S Khan, et al.',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:RGFaLdJalmkC',
-  },
-  {
-    title: 'Multi-Objective Optimization of Passive Solar Chimney Ventilation in Eastern Algeria: A Case Study Combining Surrogate Modeling and Metaheuristic Search',
-    journal: 'Energies 19 (12), 2776',
-    year: '2026',
-    authors: 'B Belfegas, A Laouissi, V Swaminathan, Y Karmi, R Elhadj, M Nouioua',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:ns9cj8rnVeAC',
-  },
-  {
-    title: 'SPINDER: an open-source 18-DoF hexapod robot with hierarchical central pattern generator control and analytic inverse kinematics',
-    journal: 'Scientific Reports',
-    year: '2026',
-    authors: 'A Maoudj, AA Saputra, B Brahmi, M Nouioua',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:O3NaXMp0MMsC',
-  },
-  {
-    title: 'Cloud-based collaborative CNC manufacturing framework integrating tool wear monitoring and scheduling support',
-    journal: 'Scientific Reports',
-    year: '2026',
-    authors: 'Imran, Mourad Nouioua, Samir Mekid',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:YFjsv_pBGBYC',
-  },
-  {
-    title: 'AI-Driven Decision Support for Multi-Objective Optimization of Turning Parameters in Grey Cast Iron Machining',
-    journal: 'Results in Engineering',
-    year: '2026',
-    authors: 'Nouioua, Mourad, et al.',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:blknAaTinKkC',
-  },
-  {
-    title: 'Vibration-Based Tool Wear Prediction via Ensemble Learning and AutoML-Guided VMD Mode Selection',
-    journal: 'Journal of Vibration Engineering & Technologies 14.1',
-    year: '2026',
-    authors: 'M Nouioua, Imran, S Mekid',
-    citations: 'New',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:maZDTaKrznsC',
-  },
-  {
-    title: 'Assessment of turning AISI 316L under MWCNT-reinforced nanofluid-assisted MQL and optimization by NSGA-II and TOPSIS',
-    journal: 'Int. J. of Advanced Manufacturing Technology 127 (7)',
-    year: '2023',
-    authors: 'B Oussama, YF Yapan, A Uysal, C Abdelhakim, N Mourad',
-    citations: '29',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:R3hNpaxXUhUC',
-  },
-  {
-    title: 'The analysis of tool vibration signals by spectral kurtosis and ICEEMDAN modes energy for insert wear monitoring in turning',
-    journal: 'Int. J. of Advanced Manufacturing Technology 115 (9)',
-    year: '2021',
-    authors: 'ML Bouhalais, M Nouioua',
-    citations: '43',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:ufrVoPGSRksC',
-  },
-  {
-    title: 'Vibration-based tool wear monitoring using ANN fed by spectral centroid indicator and RMS of CEEMDAN modes',
-    journal: 'Int. J. of Advanced Manufacturing Technology 115 (9)',
-    year: '2021',
-    authors: 'M Nouioua, ML Bouhalais',
-    citations: '32',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:W7OEmFMy1HYC',
-  },
-  {
-    title: 'Predictive modeling and multi-response optimization in turning of POM C using RSM and desirability function',
-    journal: 'Measurement 95, 99-115',
-    year: '2017',
-    authors: 'A Chabbi, MA Yallese, I Meddour, M Nouioua, T Mabrouki, F Girardin',
-    citations: '158',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:UeHWp8X0CEIC',
-  },
-  {
-    title: 'Investigation of MQL, dry, and wet turning by RSM and ANN',
-    journal: 'Int. J. of Advanced Manufacturing Technology 93 (5), 2485-2504',
-    year: '2017',
-    authors: 'M Nouioua, MA Yallese, R Khettabi, S Belhadi, ML Bouhalais, F Girardin',
-    citations: '115',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:Tyk-4Ss8FVUC',
-  },
-  {
-    title: 'Machinability study and ANN-MOALO-based multi-response optimization during Eco-Friendly machining of EN-GJL-250 cast iron',
-    journal: 'Int. J. of Advanced Manufacturing Technology 117 (3), 1179-1203',
-    year: '2021',
-    authors: 'A Laouissi, M Nouioua, MA Yallese, H Abderazek, H Maouche',
-    citations: '29',
-    link: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=tEKyL0UAAAAJ&citation_for_view=tEKyL0UAAAAJ:LkGwnXOMwfcC',
-  },
-]
+const publications: Publication[] = scholar.publications
 
 function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
@@ -291,7 +139,7 @@ export default function PublicationsSection() {
 
         <div className="text-center mt-10">
           <a
-            href="https://scholar.google.com/citations?user=tEKyL0UAAAAJ"
+            href={scholar.profileUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-body text-sm transition-colors duration-300 hover:text-[#D4AA7D]"
