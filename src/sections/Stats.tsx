@@ -69,11 +69,11 @@ export default function Stats() {
           transition: 'opacity 0.6s ease',
         }}
       >
-        <StatItem value="1002+" label="Citations" delay={0} />
-        <StatItem value="17" label="h-index" delay={0.08} />
-        <StatItem value="20" label="i10-index" delay={0.16} />
+        <StatItem value="1031+" label="Citations" delay={0} />
+        <StatItem value="18" label="h-index" delay={0.08} />
+        <StatItem value="19" label="i10-index" delay={0.16} />
         <div style={{ textAlign: 'center', padding: '2rem 1.5rem', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s' }}>
-          <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>31+</div>
+          <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>42+</div>
           <div className="font-mono text-xs uppercase mt-2" style={{ color: '#505058', letterSpacing: '0.12em' }}>Publications</div>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function Stats() {
           className="font-mono text-xs transition-colors duration-300 hover:text-[#D4AA7D]"
           style={{ color: '#505058', textDecoration: 'none', letterSpacing: '0.08em' }}
         >
-          Source: Google Scholar · May 2026 →
+          Source: Google Scholar · September 2026 →
         </a>
       </div>
     </section>
