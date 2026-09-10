@@ -1,0 +1,70 @@
+name: Update publications
+
+# Regenerates the Publications grid in src/data/research.json from the ORCID
+# record (which papers are mine) plus OpenAlex (how often each is cited), then
+# asks deploy.yml to publish the result.
+#
+# The headline stats in that file are Google Scholar figures and are NOT touched
+# here. Scholar has no API and returns 403 to GitHub's datacenter ranges, and
+# its counts are higher than OpenAlex's because it indexes more citing sources,
+# so those four numbers stay under manual control.
+#
+# The explicit dispatch at the end is not redundant: a push made with the
+# built-in GITHUB_TOKEN deliberately does not trigger other workflows, so
+# deploy.yml would never fire on its own here. Dispatching by API does work,
+# which is why this job needs actions: write.
+#
+# If either API is unreachable or returns something unexpected, the script logs
+# a warning, leaves the committed JSON alone and exits 0 -- a bad run is a green
+# no-op that keeps the last good list, never a broken site.
+
+on:
+  schedule:
+    # Mondays, 06:15 UTC. Deliberately off the hour, as Actions sheds scheduled
+    # runs when the on-the-hour queue is congested.
+    - cron: '15 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: update-publications
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh publication list
+        run: python scripts/update_publications.py
+
+      - name: Commit if the list changed
+        id: commit
+        run: |
+          if git diff --quiet -- src/data/research.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No change to src/data/research.json; nothing to publish."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/research.json
+          git commit -m 'Refresh publication list'
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Publish the refreshed list
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main

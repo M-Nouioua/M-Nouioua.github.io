@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import scholar from '@/data/scholar.json'
+import research from '@/data/research.json'
 
 interface StatItemProps {
   value: string
@@ -43,7 +43,7 @@ function StatItem({ value, label, delay }: StatItemProps) {
 }
 
 export default function Stats() {
-  const lastUpdated = new Date(`${scholar.updatedAt}T00:00:00Z`).toLocaleDateString('en-US', {
+  const lastUpdated = new Date(`${research.stats.updatedAt}T00:00:00Z`).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric',
     timeZone: 'UTC',
@@ -76,23 +76,23 @@ export default function Stats() {
           transition: 'opacity 0.6s ease',
         }}
       >
-        <StatItem value={`${scholar.stats.citations}+`} label="Citations" delay={0} />
-        <StatItem value={String(scholar.stats.hIndex)} label="h-index" delay={0.08} />
-        <StatItem value={String(scholar.stats.i10Index)} label="i10-index" delay={0.16} />
+        <StatItem value={`${research.stats.citations}+`} label="Citations" delay={0} />
+        <StatItem value={String(research.stats.hIndex)} label="h-index" delay={0.08} />
+        <StatItem value={String(research.stats.i10Index)} label="i10-index" delay={0.16} />
         <div style={{ textAlign: 'center', padding: '2rem 1.5rem', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s' }}>
-          <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>{scholar.stats.publications}+</div>
+          <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>{research.stats.publications}+</div>
           <div className="font-mono text-xs uppercase mt-2" style={{ color: '#505058', letterSpacing: '0.12em' }}>Publications</div>
         </div>
       </div>
 
       <div style={{ borderTop: '1px solid #1E1E22', padding: '0.75rem 2rem', textAlign: 'center' }}>
         <a
-          href={scholar.profileUrl}
+          href={research.stats.profileUrl}
           target="_blank" rel="noopener noreferrer"
           className="font-mono text-xs transition-colors duration-300 hover:text-[#D4AA7D]"
           style={{ color: '#505058', textDecoration: 'none', letterSpacing: '0.08em' }}
         >
-          Source: {scholar.source} · {lastUpdated} →
+          Source: {research.stats.source} · {lastUpdated} →
         </a>
       </div>
     </section>

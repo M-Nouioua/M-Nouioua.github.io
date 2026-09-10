@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
-import scholar from '@/data/scholar.json'
+import research from '@/data/research.json'
 
 interface Publication {
   title: string
@@ -11,7 +11,7 @@ interface Publication {
   link: string
 }
 
-const publications: Publication[] = scholar.publications
+const publications: Publication[] = research.publications
 
 function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
@@ -139,7 +139,7 @@ export default function PublicationsSection() {
 
         <div className="text-center mt-10">
           <a
-            href={scholar.profileUrl}
+            href={research.stats.profileUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-body text-sm transition-colors duration-300 hover:text-[#D4AA7D]"
