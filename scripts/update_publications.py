@@ -41,10 +41,14 @@ OPENALEX_API = "https://api.openalex.org/works"
 CONTACT = "mourad.nouioua@kfupm.edu.sa"
 DATA_PATH = Path(__file__).resolve().parent.parent / "src" / "data" / "research.json"
 
-# the grid shows the newest papers first, then the most-cited ones, which is how
-# the section was curated before it was automated
+# The grid shows pinned papers first, then the newest, then the most-cited, up
+# to N_TOTAL. Pinning exists because OpenAlex dates a work YYYY-01-01 when it
+# only knows the year: such a paper sorts below every same-year paper that has a
+# real date, so a brand-new, not-yet-cited article can miss both the "newest"
+# and the "most cited" cut. Pinned DOIs are read from research.json, so the
+# featured papers can be changed without touching this script.
 N_RECENT = 10
-N_TOP_CITED = 9
+N_TOTAL = 21
 
 # refuse to publish a suspiciously short list rather than gut the grid
 MIN_PAPERS = 20
@@ -101,6 +105,11 @@ def openalex_works(dois: list[str]) -> list[dict]:
     return works
 
 
+def norm_doi(doi: str | None) -> str:
+    """Compare DOIs case-insensitively and without the resolver prefix."""
+    return (doi or "").lower().replace("https://doi.org/", "").strip()
+
+
 def venue_of(work: dict) -> str:
     source = (work.get("primary_location") or {}).get("source") or {}
     name = (source.get("display_name") or "").strip()
@@ -141,7 +150,7 @@ def to_card(work: dict) -> dict:
     }
 
 
-def build_cards() -> list[dict]:
+def build_cards(pinned: list[str]) -> list[dict]:
     dois = orcid_dois()
     if not dois:
         raise ValueError("ORCID record returned no DOIs")
@@ -164,19 +173,35 @@ def build_cards() -> list[dict]:
     # year alone left that group in whatever order the API returned
     newest = sorted(papers, key=lambda w: (w.get("publication_date") or ""), reverse=True)
     most_cited = sorted(papers, key=lambda w: (w.get("cited_by_count") or 0), reverse=True)
+    by_doi = {norm_doi(w.get("doi")): w for w in papers}
 
     selected, seen = [], set()
-    for work in newest[:N_RECENT]:
-        selected.append(work)
-        seen.add(work["doi"])
-    for work in most_cited:
-        if len(selected) >= N_RECENT + N_TOP_CITED:
-            break
-        if work["doi"] not in seen:
+
+    def take(work):
+        if work and work["doi"] not in seen:
             selected.append(work)
             seen.add(work["doi"])
 
-    return [to_card(w) for w in selected]
+    # 1. pinned papers, in the order given
+    for doi in pinned:
+        work = by_doi.get(norm_doi(doi))
+        if work is None:
+            print(f"::warning::pinned DOI {doi} is not among the resolved "
+                  f"journal articles; skipping it")
+            continue
+        take(work)
+
+    # 2. fill with the newest
+    for work in newest[:N_RECENT]:
+        take(work)
+
+    # 3. top up with the most-cited
+    for work in most_cited:
+        if len(selected) >= N_TOTAL:
+            break
+        take(work)
+
+    return [to_card(w) for w in selected[:N_TOTAL]]
 
 
 def write_run_summary(cards: list[dict], total_changed: bool) -> None:
@@ -199,8 +224,11 @@ def main() -> int:
                         help="fetch and report without writing the file")
     args = parser.parse_args()
 
+    data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+    pinned = data.get("pinnedDois", [])
+
     try:
-        cards = build_cards()
+        cards = build_cards(pinned)
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
         print(f"::warning::ORCID/OpenAlex unreachable ({exc}); keeping existing data")
         return 0
@@ -217,7 +245,6 @@ def main() -> int:
         print("--check given, nothing written")
         return 0
 
-    data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
     changed = data.get("publications") != cards
     if not changed:
         print("no change")
