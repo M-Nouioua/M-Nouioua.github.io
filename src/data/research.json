@@ -13,7 +13,7 @@
     "10.1109/TII.2026.3722552",
     "10.1038/s41598-026-69513-3"
   ],
-  "publicationsUpdatedAt": "2026-09-10",
+  "publicationsUpdatedAt": "2026-09-21",
   "publications": [
     {
       "title": "Cross-Edge-Validated Tool Condition Monitoring via Joint Natural-Frequency and Damping-Ratio Tracking of Cutting Vibration",
@@ -30,6 +30,14 @@
       "authors": "M Nouioua, AAD Sarhan, HM Al-Qahtani, S Bashmal, A Laouissi",
       "citations": "New",
       "link": "https://doi.org/10.1038/s41598-026-69513-3"
+    },
+    {
+      "title": "A machine learning prediction–optimisation framework for dry turning of grey cast iron to enhance machinability and prolong tool life: A comparative study of hybrid DNN, SVM and decision tree",
+      "journal": "Ironmaking & Steelmaking Processes Products and Applications",
+      "year": "2026",
+      "authors": "L Aissa, K Safi, M Nouioua, Y Chetbani, MA Yallese, et al.",
+      "citations": "New",
+      "link": "https://doi.org/10.1177/03019233261469994"
     },
     {
       "title": "Hybrid Numerical-Experimental Optimization of Resistance Spot Welding Parameters for Dissimilar S235/AISI 1075 Steel Sheets via Box–Behnken Response Surface Methodology",
@@ -94,14 +102,6 @@
       "authors": "B Belfegas, A Laouissi, S Vasanth, Y Karmi, R Elhadj, et al.",
       "citations": "New",
       "link": "https://doi.org/10.3390/en19122776"
-    },
-    {
-      "title": "Cloud-based collaborative CNC manufacturing framework integrating tool wear monitoring and scheduling support",
-      "journal": "Scientific Reports",
-      "year": "2026",
-      "authors": "Imran, M Nouioua, S Mekid",
-      "citations": "3",
-      "link": "https://doi.org/10.1038/s41598-026-42165-z"
     },
     {
       "title": "Predictive modeling and multi-response optimization of technological parameters in turning of Polyoxymethylene polymer (POM C) using RSM and desirability function",
