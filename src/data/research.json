@@ -13,13 +13,13 @@
     "10.1109/TII.2026.3722552",
     "10.1038/s41598-026-69513-3"
   ],
-  "publicationsUpdatedAt": "2026-09-21",
+  "publicationsUpdatedAt": "2026-09-28",
   "publications": [
     {
       "title": "Cross-Edge-Validated Tool Condition Monitoring via Joint Natural-Frequency and Damping-Ratio Tracking of Cutting Vibration",
       "journal": "IEEE Transactions on Industrial Informatics",
       "year": "2026",
-      "authors": "M Nouioua, AAD Sarhan, I Chekalil, S Vasanth, PKM P, et al.",
+      "authors": "M Nouioua, AAD Sarhan, I Chekalil, V Swaminathan, PKM P, et al.",
       "citations": "New",
       "link": "https://doi.org/10.1109/tii.2026.3722552"
     },
@@ -67,7 +67,7 @@
       "title": "How spindle speed and feed rate control PMMA micro-milling: baseline process optimization toward micro-milling of PMMA/GNP nanocomposites",
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2026",
-      "authors": "S Rawal, AAD Sarhan, A Sidpara, M Nouioua",
+      "authors": "S Rawal, AAD Sarhan, AM Sidpara, M Nouioua",
       "citations": "New",
       "link": "https://doi.org/10.1007/s00170-026-18860-6"
     },
@@ -75,7 +75,7 @@
       "title": "Quantitative SEM morphometry for monitoring laser powder-bed-fusion metal-powder feedstock",
       "journal": "Materials Today Communications",
       "year": "2026",
-      "authors": "M Nouioua, I Chekalil, Imran, S Vasanth, RM Khan, et al.",
+      "authors": "M Nouioua, I Chekalil, Imran, V Swaminathan, RM Khan, et al.",
       "citations": "New",
       "link": "https://doi.org/10.1016/j.mtcomm.2026.115825"
     },
@@ -91,7 +91,7 @@
       "title": "Performance evaluation of ultrasonic assisted leather bonding for improved durability and sustainability",
       "journal": "Results in Engineering",
       "year": "2026",
-      "authors": "S Vasanth, I Chekalil, A Alsheghri, MF Saffiudeen, S Khan, et al.",
+      "authors": "V Swaminathan, I Chekalil, A Alsheghri, MF Saffiudeen, S Khan, et al.",
       "citations": "New",
       "link": "https://doi.org/10.1016/j.rineng.2026.111524"
     },
@@ -99,7 +99,7 @@
       "title": "Multi-Objective Optimization of Passive Solar Chimney Ventilation in Eastern Algeria: A Case Study Combining Surrogate Modeling and Metaheuristic Search",
       "journal": "Energies",
       "year": "2026",
-      "authors": "B Belfegas, A Laouissi, S Vasanth, Y Karmi, R Elhadj, et al.",
+      "authors": "B Belfegas, A Laouissi, V Swaminathan, Y Karmi, R Elhadj, et al.",
       "citations": "New",
       "link": "https://doi.org/10.3390/en19122776"
     },
