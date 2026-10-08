@@ -1,99 +1,26 @@
-import { useEffect, useRef, useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import research from '@/data/research.json'
 
-interface StatItemProps {
-  value: string
-  label: string
-  delay: number
-}
-
-function StatItem({ value, label, delay }: StatItemProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target) } },
-      { threshold: 0.3 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(20px)',
-        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
-        textAlign: 'center',
-        padding: '2rem 1.5rem',
-        borderRight: '1px solid #1E1E22',
-      }}
-    >
-      <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>
-        {value}
-      </div>
-      <div className="font-mono text-xs uppercase mt-2" style={{ color: '#505058', letterSpacing: '0.12em' }}>
-        {label}
-      </div>
-    </div>
-  )
-}
-
 export default function Stats() {
-  const lastUpdated = new Date(`${research.stats.updatedAt}T00:00:00Z`).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
+  const date = new Date(`${research.stats.updatedAt}T00:00:00Z`).toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
   })
-
-  const ref = useRef<HTMLElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.unobserve(e.target) } },
-      { threshold: 0.2 }
-    )
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-
+  const stats = [
+    { value: research.stats.citations.toLocaleString('en-US'), label: 'Citations' },
+    { value: research.stats.publications, label: 'Publications' },
+    { value: research.stats.hIndex, label: 'h-index' },
+    { value: research.stats.i10Index, label: 'i10-index' },
+  ]
   return (
-    <section
-      ref={ref}
-      style={{ backgroundColor: '#0D0D0F', borderTop: '1px solid #1E1E22', borderBottom: '1px solid #1E1E22' }}
-    >
-      <div
-        className="mx-auto"
-        style={{
-          maxWidth: 1200,
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          opacity: visible ? 1 : 0,
-          transition: 'opacity 0.6s ease',
-        }}
-      >
-        <StatItem value={`${research.stats.citations}+`} label="Citations" delay={0} />
-        <StatItem value={String(research.stats.hIndex)} label="h-index" delay={0.08} />
-        <StatItem value={String(research.stats.i10Index)} label="i10-index" delay={0.16} />
-        <div style={{ textAlign: 'center', padding: '2rem 1.5rem', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.24s' }}>
-          <div className="font-heading" style={{ fontSize: 'clamp(2.2rem,4vw,3.5rem)', color: '#C4956A', fontWeight: 400, lineHeight: 1 }}>{research.stats.publications}+</div>
-          <div className="font-mono text-xs uppercase mt-2" style={{ color: '#505058', letterSpacing: '0.12em' }}>Publications</div>
-        </div>
-      </div>
-
-      <div style={{ borderTop: '1px solid #1E1E22', padding: '0.75rem 2rem', textAlign: 'center' }}>
-        <a
-          href={research.stats.profileUrl}
-          target="_blank" rel="noopener noreferrer"
-          className="font-mono text-xs transition-colors duration-300 hover:text-[#D4AA7D]"
-          style={{ color: '#505058', textDecoration: 'none', letterSpacing: '0.08em' }}
-        >
-          Source: {research.stats.source} · {lastUpdated} →
-        </a>
+    <section className="stats-section" aria-label="Research metrics">
+      <div className="container">
+        <dl className="stats-grid">
+          {stats.map(stat => <div className="stat" key={stat.label}><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}
+        </dl>
+        <p className="stats-source">
+          <a href={research.stats.profileUrl} target="_blank" rel="noopener noreferrer">{research.stats.source} <ArrowUpRight size={13} aria-hidden="true" /></a>
+          <span>Recorded <time dateTime={research.stats.updatedAt}>{date}</time></span>
+        </p>
       </div>
     </section>
   )
