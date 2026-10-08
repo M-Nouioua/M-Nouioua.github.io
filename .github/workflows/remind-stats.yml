@@ -1,0 +1,137 @@
+name: Remind me to refresh the Scholar stats
+
+# The headline figures in src/data/research.json (citations, h-index, i10-index,
+# publication count) are Google Scholar numbers kept by hand, because Scholar has
+# no API and returns 403 to GitHub's datacenter ranges. Nothing can fetch them
+# from CI, so this job does the next best thing: once a month it opens an issue
+# with the committed values, how stale they are, and the exact JSON block to
+# paste back, so refreshing them is a one-minute edit instead of a thing to
+# remember.
+#
+# It opens at most one issue at a time: if last month's reminder is still open,
+# the run is a no-op rather than a second nag.
+
+on:
+  schedule:
+    # 1st of the month, 06:20 UTC. Off the hour on purpose, as Actions sheds
+    # scheduled runs when the on-the-hour queue is congested.
+    - cron: '20 6 1 * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Open a reminder even if one is already open'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: remind-stats
+  cancel-in-progress: false
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read the committed stats
+        id: stats
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime, json
+
+          data = json.load(open("src/data/research.json", encoding="utf-8"))
+          stats = data["stats"]
+          updated = datetime.date.fromisoformat(stats["updatedAt"])
+          age = (datetime.date.today() - updated).days
+
+          for key in ("citations", "hIndex", "i10Index", "publications",
+                      "updatedAt", "profileUrl"):
+              print(f"{key}={stats[key]}")
+          print(f"age={age}")
+          print(f"pubUpdated={data.get('publicationsUpdatedAt', 'unknown')}")
+          PY
+
+      - name: Make sure the label exists
+        run: |
+          gh label create stats-refresh \
+            --color C4956A \
+            --description 'Monthly reminder to refresh the Google Scholar headline figures' \
+            2>/dev/null || true
+
+      - name: Is a reminder already open?
+        id: existing
+        run: |
+          count=$(gh issue list --state open --label stats-refresh --json number --jq 'length')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "$count reminder(s) already open."
+
+      - name: Open the reminder
+        if: steps.existing.outputs.count == '0' || github.event.inputs.force == 'true'
+        env:
+          CITATIONS:  ${{ steps.stats.outputs.citations }}
+          HINDEX:     ${{ steps.stats.outputs.hIndex }}
+          I10:        ${{ steps.stats.outputs.i10Index }}
+          PUBS:       ${{ steps.stats.outputs.publications }}
+          UPDATED:    ${{ steps.stats.outputs.updatedAt }}
+          AGE:        ${{ steps.stats.outputs.age }}
+          PROFILE:    ${{ steps.stats.outputs.profileUrl }}
+          PUBUPDATED: ${{ steps.stats.outputs.pubUpdated }}
+        run: |
+          TODAY=$(date -u +'%Y-%m-%d')
+
+          cat > /tmp/body.md <<EOF
+          The four headline figures on the site are Google Scholar numbers kept by hand.
+          They were last set on **$UPDATED**, which is **$AGE days ago**.
+
+          Open your profile, copy the current numbers, and paste the block below into
+          \`src/data/research.json\` with the values corrected:
+
+          [Google Scholar profile]($PROFILE)
+
+          \`\`\`json
+            "stats": {
+              "citations": $CITATIONS,
+              "hIndex": $HINDEX,
+              "i10Index": $I10,
+              "publications": $PUBS,
+              "source": "Google Scholar",
+              "updatedAt": "$TODAY",
+              "profileUrl": "$PROFILE"
+            },
+          \`\`\`
+
+          ### Checklist
+
+          - [ ] Citations (currently showing **$CITATIONS**)
+          - [ ] h-index (currently showing **$HINDEX**)
+          - [ ] i10-index (currently showing **$I10**)
+          - [ ] Publication count (currently showing **$PUBS**)
+          - [ ] Set \`updatedAt\` to \`$TODAY\` so the site's "last updated" line moves too
+          - [ ] Commit to \`main\` (the push fires deploy.yml on its own)
+
+          Close this issue once it is pushed. The next reminder is due in a month,
+          and will not open while this one is still open.
+
+          ---
+
+          For reference, the publication cards are a separate, automated thing: they
+          come from your ORCID record with OpenAlex citation counts, last refreshed
+          **$PUBUPDATED**. Those numbers are lower than Scholar's by design, as
+          OpenAlex indexes fewer citing sources.
+
+          <sub>Opened automatically by \`.github/workflows/remind-stats.yml\`.</sub>
+          EOF
+
+          gh issue create \
+            --title "Refresh the Google Scholar headline stats ($(date -u +'%B %Y'))" \
+            --label stats-refresh \
+            --assignee "${{ github.repository_owner }}" \
+            --body-file /tmp/body.md
