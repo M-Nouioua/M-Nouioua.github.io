@@ -13,7 +13,7 @@
     "10.1109/TII.2026.3722552",
     "10.1038/s41598-026-69513-3"
   ],
-  "publicationsUpdatedAt": "2026-09-28",
+  "publicationsUpdatedAt": "2026-10-12",
   "publications": [
     {
       "title": "Cross-Edge-Validated Tool Condition Monitoring via Joint Natural-Frequency and Damping-Ratio Tracking of Cutting Vibration",
@@ -35,7 +35,7 @@
       "title": "A machine learning prediction–optimisation framework for dry turning of grey cast iron to enhance machinability and prolong tool life: A comparative study of hybrid DNN, SVM and decision tree",
       "journal": "Ironmaking & Steelmaking Processes Products and Applications",
       "year": "2026",
-      "authors": "L Aissa, K Safi, M Nouioua, Y Chetbani, MA Yallese, et al.",
+      "authors": "A Laouissi, K Safi, M Nouioua, Y Chetbani, MA Yallese, et al.",
       "citations": "New",
       "link": "https://doi.org/10.1177/03019233261469994"
     },
@@ -96,12 +96,12 @@
       "link": "https://doi.org/10.1016/j.rineng.2026.111524"
     },
     {
-      "title": "Multi-Objective Optimization of Passive Solar Chimney Ventilation in Eastern Algeria: A Case Study Combining Surrogate Modeling and Metaheuristic Search",
-      "journal": "Energies",
+      "title": "SPINDER: an open-source 18-DoF hexapod robot with hierarchical central pattern generator control and analytic inverse kinematics",
+      "journal": "Scientific Reports",
       "year": "2026",
-      "authors": "B Belfegas, A Laouissi, V Swaminathan, Y Karmi, R Elhadj, et al.",
-      "citations": "New",
-      "link": "https://doi.org/10.3390/en19122776"
+      "authors": "A Maoudj, AA Saputra, B Brahmi, M Nouioua",
+      "citations": "1",
+      "link": "https://doi.org/10.1038/s41598-026-56856-0"
     },
     {
       "title": "Predictive modeling and multi-response optimization of technological parameters in turning of Polyoxymethylene polymer (POM C) using RSM and desirability function",
@@ -116,7 +116,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2017",
       "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, ML Bouhalais, et al.",
-      "citations": "91",
+      "citations": "90",
       "link": "https://doi.org/10.1007/s00170-017-0589-2"
     },
     {
@@ -124,7 +124,7 @@
       "journal": "Proc. IMechE Part C: J. Mechanical Engineering Science",
       "year": "2019",
       "authors": "A Zerti, MA Yallese, O Zerti, M Nouioua, R Khettabi",
-      "citations": "90",
+      "citations": "89",
       "link": "https://doi.org/10.1177/0954406218820557"
     },
     {
@@ -132,7 +132,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2017",
       "authors": "A Chabbi, MA Yallese, M Nouioua, I Meddour, T Mabrouki, et al.",
-      "citations": "80",
+      "citations": "79",
       "link": "https://doi.org/10.1007/s00170-016-9858-8"
     },
     {
@@ -148,16 +148,8 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2019",
       "authors": "M Elbah, H Laouici, S Benlahmidi, M Nouioua, M Yallese",
-      "citations": "51",
+      "citations": "49",
       "link": "https://doi.org/10.1007/s00170-019-04403-9"
-    },
-    {
-      "title": "Comparative assessment of cooling conditions, including MQL technology on machining factors in an environmentally friendly approach",
-      "journal": "Int. J. of Advanced Manufacturing Technology",
-      "year": "2017",
-      "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, T Mabrouki",
-      "citations": "42",
-      "link": "https://doi.org/10.1007/s00170-016-9958-5"
     },
     {
       "title": "The analysis of tool vibration signals by spectral kurtosis and ICEEMDAN modes energy for insert wear monitoring in turning operation",
@@ -166,6 +158,14 @@
       "authors": "ML Bouhalais, M Nouioua",
       "citations": "42",
       "link": "https://doi.org/10.1007/s00170-021-07319-5"
+    },
+    {
+      "title": "Comparative assessment of cooling conditions, including MQL technology on machining factors in an environmentally friendly approach",
+      "journal": "Int. J. of Advanced Manufacturing Technology",
+      "year": "2017",
+      "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, T Mabrouki",
+      "citations": "41",
+      "link": "https://doi.org/10.1007/s00170-016-9958-5"
     },
     {
       "title": "Tool vibration, surface roughness, cutting power, and productivity assessment using RSM and GRA approach during machining of Inconel 718 with PVD-coated carbide tool",
