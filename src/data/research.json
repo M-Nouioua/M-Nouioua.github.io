@@ -13,7 +13,7 @@
     "10.1109/TII.2026.3722552",
     "10.1038/s41598-026-69513-3"
   ],
-  "publicationsUpdatedAt": "2026-10-12",
+  "publicationsUpdatedAt": "2026-11-09",
   "publications": [
     {
       "title": "Cross-Edge-Validated Tool Condition Monitoring via Joint Natural-Frequency and Damping-Ratio Tracking of Cutting Vibration",
@@ -108,31 +108,31 @@
       "journal": "Measurement",
       "year": "2016",
       "authors": "A Chabbi, MA Yallese, I Meddour, M Nouioua, T Mabrouki, et al.",
-      "citations": "128",
+      "citations": "129",
       "link": "https://doi.org/10.1016/j.measurement.2016.09.043"
-    },
-    {
-      "title": "Investigation of the performance of the MQL, dry, and wet turning by response surface methodology (RSM) and artificial neural network (ANN)",
-      "journal": "Int. J. of Advanced Manufacturing Technology",
-      "year": "2017",
-      "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, ML Bouhalais, et al.",
-      "citations": "90",
-      "link": "https://doi.org/10.1007/s00170-017-0589-2"
     },
     {
       "title": "Prediction of machining performance using RSM and ANN models in hard turning of martensitic stainless steel AISI 420",
       "journal": "Proc. IMechE Part C: J. Mechanical Engineering Science",
       "year": "2019",
       "authors": "A Zerti, MA Yallese, O Zerti, M Nouioua, R Khettabi",
-      "citations": "89",
+      "citations": "91",
       "link": "https://doi.org/10.1177/0954406218820557"
+    },
+    {
+      "title": "Investigation of the performance of the MQL, dry, and wet turning by response surface methodology (RSM) and artificial neural network (ANN)",
+      "journal": "Int. J. of Advanced Manufacturing Technology",
+      "year": "2017",
+      "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, ML Bouhalais, et al.",
+      "citations": "89",
+      "link": "https://doi.org/10.1007/s00170-017-0589-2"
     },
     {
       "title": "Modeling and optimization of turning process parameters during the cutting of polymer (POM C) based on RSM, ANN, and DF methods",
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2017",
       "authors": "A Chabbi, MA Yallese, M Nouioua, I Meddour, T Mabrouki, et al.",
-      "citations": "79",
+      "citations": "82",
       "link": "https://doi.org/10.1007/s00170-016-9858-8"
     },
     {
@@ -148,7 +148,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2019",
       "authors": "M Elbah, H Laouici, S Benlahmidi, M Nouioua, M Yallese",
-      "citations": "49",
+      "citations": "50",
       "link": "https://doi.org/10.1007/s00170-019-04403-9"
     },
     {
@@ -156,7 +156,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2021",
       "authors": "ML Bouhalais, M Nouioua",
-      "citations": "42",
+      "citations": "40",
       "link": "https://doi.org/10.1007/s00170-021-07319-5"
     },
     {
@@ -164,7 +164,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2017",
       "authors": "M Nouioua, MA Yallese, R Khettabi, S Belhadi, T Mabrouki",
-      "citations": "41",
+      "citations": "39",
       "link": "https://doi.org/10.1007/s00170-016-9958-5"
     },
     {
@@ -172,7 +172,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2022",
       "authors": "I Kouahla, MA Yallese, S Belhadi, K Safi, M Nouioua",
-      "citations": "32",
+      "citations": "34",
       "link": "https://doi.org/10.1007/s00170-022-09988-2"
     },
     {
@@ -180,7 +180,7 @@
       "journal": "Int. J. of Advanced Manufacturing Technology",
       "year": "2021",
       "authors": "M Nouioua, ML Bouhalais",
-      "citations": "30",
+      "citations": "28",
       "link": "https://doi.org/10.1007/s00170-021-07376-w"
     }
   ]
