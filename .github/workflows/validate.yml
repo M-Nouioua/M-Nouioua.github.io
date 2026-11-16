@@ -1,0 +1,35 @@
+name: Validate portfolio
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - run: npm run build
+      - name: Install browser check tools
+        run: |
+          npm install --no-save --package-lock=false --legacy-peer-deps playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Check the production site
+        run: node scripts/check_portfolio.mjs
+      - name: Save desktop and mobile previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-preview
+          path: portfolio-preview/
+          if-no-files-found: ignore
+          retention-days: 14

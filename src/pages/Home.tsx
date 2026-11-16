@@ -10,16 +10,19 @@ import Contact from '@/sections/Contact'
 
 export default function Home() {
   return (
-    <div style={{ backgroundColor: '#08080A', minHeight: '100vh' }}>
+    <>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <Navigation />
-      <Hero />
-      <About />
-      <Stats />
-      <Conference />
-      <Experience />
-      <PublicationsSection />
-      <Skills />
-      <Contact />
-    </div>
+      <main id="main-content" tabIndex={-1}>
+        <Hero />
+        <Stats />
+        <About />
+        <PublicationsSection />
+        <Experience />
+        <Conference />
+        <Skills />
+        <Contact />
+      </main>
+    </>
   )
 }
